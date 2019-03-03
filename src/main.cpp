@@ -5,6 +5,7 @@
 #include "powerup.h"
 #include "arrow.h"
 #include "tree.h"
+#include "para.h"
 #include "target.h"
 #include "island.h"
 #include "water.h"
@@ -37,6 +38,7 @@ void dashboard(int,int,int,int,int,int,int,int);
 
 Indicator ind1,ind2,ind3,ind4;
 vector<Island> vector_i;
+vector<Para> vector_para;
 vector<Baloon> vector_bal;
 vector<Tree> vector_tree;
 vector<Mbaloon> vector_mbal;
@@ -76,6 +78,7 @@ int camview=3;
 glm::vec3 tempeye = glm::vec3(50,50,60);//for tower view
 
 //bars
+
 double speed=100;
 double fuel=100;
 double health=100;
@@ -92,6 +95,10 @@ float sright;
 //timers
 Timer t60(1.0 / 60);
 Timer t(1);
+
+float rho=45;
+
+
 
 /* Render the scene with openGL */
 /* Edit this function according to your assignment */
@@ -122,7 +129,6 @@ void draw() {
 	else if(camview==1)//tower
 	{
 		double dist=glm::length(plane1.position-tempeye);
-		//cout << dist << "\n\n";
 		if(dist>100)
 		{
 			eye = glm::vec3(50+plane1.position.x,50+plane1.position.y,60);
@@ -136,7 +142,7 @@ void draw() {
 	}
 	else if (camview==2)//top
 	{
-		eye  = glm::vec3(plane1.position.x, plane1.position.y, plane1.position.z+40);
+		eye  = glm::vec3(plane1.position.x, plane1.position.y, 100);
 		target = glm::vec3 (plane1.position.x,plane1.position.y,plane1.position.z);
 		up = glm::vec3 (0, -1, 0);
 	}
@@ -148,6 +154,29 @@ void draw() {
 		eye=target+temp;
 		eye.z+=5;
 		up = glm::vec3(0,0,1);
+	}
+	else if(camview==4)//helicopter
+	{
+		//setting target and up vectors
+		target = glm::vec3(plane1.position.x, plane1.position.y,plane1.position.z);
+		up = glm::vec3(0,0,1);
+
+		//getting cursor position
+		double xpos,ypos;
+		glfwGetCursorPos(window,&xpos,&ypos);
+
+		// cout << "xpos" << xpos << "\n";
+		// cout << "ypos" << ypos << "\n";
+
+		//window length::1919
+		//window breadth::1079
+		//setting rho,theta,phi
+		float angle =(xpos/1000)*2*M_PI;
+		float yh=0;
+		float phi = ((ypos+yh)/1000)*2*M_PI;
+
+		//x,y,z in rho,theta,phi
+		eye= plane1.position - rho*glm::vec3(cos(angle)*sin(phi),cos(phi),sin(angle)*sin(phi));
 	}
 	Matrices.view = glm::lookAt(eye,target,up);
 	// Compute ViewProject matrix as view/camera might not be changed for this frame (basic scenario)
@@ -236,7 +265,7 @@ void draw() {
 		cmp.angle=acos(cmp.angle);
 
 		displayangle=cmp.angle*180;
-		cout <<cmp.angle*180/M_PI << "\n";
+		//cout <<cmp.angle*180/M_PI << "\n";
 		cmp.draw(VP);
 		cmp.set_position(plane1.position-y+x+z);
 
@@ -272,6 +301,8 @@ void draw() {
 		vector_ring[i].draw(VP);
 	for(int i=0;i<vector_tree.size();i++)
 		vector_tree[i].draw(VP);
+	for(int i=0;i<vector_para.size();i++)
+		vector_para[i].draw(VP);
 
 	//baloons
 	if(bpress && boon[balno])
@@ -328,7 +359,7 @@ void draw() {
 			vector_enemybal[i+1].velocity/=len;
 
 		}
-		// i++;
+		i++;
 	}
 }
 
@@ -383,7 +414,7 @@ void tick_input(GLFWwindow *window) {
 	if(v && t.processTick())
 	{
 		camview++;
-		camview=camview%4;
+		camview=camview%5;
 	}
 	if(space)
 	{
@@ -506,33 +537,37 @@ void tick_elements() {
 		vector_mbal[mbalno].tick(-1);
 
 	for(int i=0;i<vector_enemybal.size();i++)
-	{
 		vector_enemybal[i].tick(1);
-	}
+
+	for(int i=0;i<vector_para.size();i++)
+		vector_para[i].tick();
 }
 
 //collision detection
 void collide(){
 
-	//volcano
+	//volcano and plane
 	for(int i=0;i<vector_v.size();i++)
 	{
-		if(colision(plane1.position,vector_v[i].position,7))
-			cout << "volcano\n\n";
+		if(colision(plane1.position,vector_v[i].position,8))
+		{
+			system("clear");
+			cout << "\nPLANE BLEW UP...\n";
+			quit(window);
+		}
 	}
 
-	if(plane1.position.z<.5)
-		quit(window);
-
-	//powerup
+	//powerup and plane
 	for(int i=0;i<vector_pu.size();i++)
 	{
 		if(colision(plane1.position,vector_pu[i].position,2))
 		{
 			score+=10;
+
 			char title[100];
 			sprintf(title, "score->%d",score);
 			glfwSetWindowTitle(window,title);
+
 			if(vector_pu[i].flag==0)
 				health+=10;
 			else
@@ -540,6 +575,7 @@ void collide(){
 
 			if(fuel>100)
 				fuel=100;
+
 			if(health>100)
 				health=100;
 
@@ -548,76 +584,168 @@ void collide(){
 		}
 	}
 
-	//boats
+	//plane kills boats bomb/misile
 	for(int i=0;i<vector_boat.size();i++)
 	{
 		if(colision(vector_bal[balno].position,vector_boat[i].position,4) || colision(vector_mbal[mbalno].position,vector_boat[i].position,4) )
 		{
 			score+=100;
+
 			char title[100];
 			sprintf(title, "score->%d",score);
 			glfwSetWindowTitle(window,title);
+
 			auto it=vector_boat.begin();
 			vector_boat.erase(it+i);
 		}
 	}
 
-	//enemies
+	//plane and boat
+	for(int i=0;i<vector_boat.size();i++)
+	{
+		if(colision(plane1.position,vector_boat[i].position,5))
+		{
+			system("clear");
+			cout << "\nPLANE CRASHED...\n";
+			quit(window);
+		}
+	}
+
+	//plane kills enemies bomb/misile
 	for(int i=0;i<vector_eb.size();i++)
 	{
 		if(colision(vector_bal[balno].position,vector_eb[i].position,4) || colision(vector_mbal[mbalno].position,vector_eb[i].position,4) )
 		{
 			score+=200;
+
 			char title[100];
 			sprintf(title, "score->%d",score);
 			glfwSetWindowTitle(window,title);
+
+			if(arr.position.x==vector_eb[i].position.x)
+			{
+				enemyno++;
+			}
+
 			dead[i]=true;
 			auto it=vector_eb.begin();
 			vector_eb.erase(it+i);
+			auto it2=dead.begin();
+			dead.erase(it2+i);
 		}
 	}
 
-	//plane and enemies
-	for(int i=enemyno*100;i<enemyno*100+100;i++)
+	//plane and enemy
+	for(int i=0;i<vector_eb.size();i++)
+	{
+		if(colision(plane1.position,vector_eb[i].position,5) && !dead[i])//check if killed or not
+		{
+			system("clear");
+			cout << "\nPLANE CRASHED...\n";
+			quit(window);
+		}
+	}
+
+	//plane and tree
+	for(int i=0;i<vector_tree.size();i++)
+	{
+		if(colision(plane1.position,vector_tree[i].position,3))
+		{
+			system("clear");
+			cout << "\nPLANE CRASHED...\n";
+			quit(window);
+		}
+	}
+
+	//plane and enemie misile
+	for(int i=enemyno*100;i<enemyno*100+200;i++)
 	{
 		if(colision(vector_enemybal[i].position,plane1.position,3))
 		{
 			health--;
 			score-=10;
+
 			char title[100];
 			sprintf(title, "score->%d",score);
 			glfwSetWindowTitle(window,title);
+
 			auto it=vector_enemybal.begin();
 			Mbaloon mbal;
 			mbal=Mbaloon(vector_eb[enemyno].position.x,vector_eb[enemyno].position.y,vector_eb[enemyno].position.z);
 			*(i+it)=mbal;
-			//tempv.push_back()
-
 		}
 
 	}
 
-	//rings
+	//rings and plane
 	for(int i=0;i<vector_ring.size();i++)
 	{
 		if(colision(vector_ring[i].position,plane1.position,2))
 		{
 			score+=50;
+
 			char title[100];
 			sprintf(title, "score->%d",score);
 			glfwSetWindowTitle(window,title);
+
 			auto it=vector_ring.begin();
 			vector_ring.erase(i+it);
+		}
+	}
+
+	//plane and landing
+	for(int i=0;i<vector_i.size();i++)
+	{
+		if(colision(plane1.position,vector_i[i].position,5) && plane1.position.z<1)
+		{
+			plane1.position.z=1;
+		}
+
+	}
+
+	//plane lands on water
+	if(plane1.position.z<0)
+	{
+		system("clear");
+		cout << "\nPLANE SANK...\n";
+		// plane1.position.z=0;
+		quit(window);
+	} 
+
+	//plane and parachutes
+	for(int i=0;i<vector_para.size();i++)
+	{
+		if(colision(plane1.position,glm::vec3(vector_para[i].position.x-2.1,vector_para[i].position.y+.9,vector_para[i].position.z+50-7.2),3))
+		{
+			system("clear");
+			cout << "\nPLANE CRASHED...\n";
+			quit(window);
+		}
+	}
+
+	//plane hitting parachutes
+	for(int i=0;i<vector_para.size();i++)
+	{
+		if(colision(glm::vec3(vector_para[i].position.x-2.1,vector_para[i].position.y+.9,vector_para[i].position.z+50-7.2),vector_bal[balno].position,3) || colision(glm::vec3(vector_para[i].position.x-2.1,vector_para[i].position.y+.9,vector_para[i].position.z+50-7.2),vector_mbal[mbalno].position,3))
+		{
+			score+=100;
+
+			char title[100];
+			sprintf(title, "score->%d",score);
+			glfwSetWindowTitle(window,title);
+
+			auto it=vector_para.begin();
+			vector_para.erase(it+i);
 		}
 	}
 }
 
 //update checkpoint
-void checkpointcheck()
-{
-	if(dead[enemyno])
-		enemyno++;
-}
+// void checkpointcheck()
+// {
+// 	if(dead[enemyno])
+// 		enemyno++;
+// }
 
 
 /* Initialize the OpenGL rendering properties */
@@ -630,7 +758,7 @@ void initGL(GLFWwindow *window, int width, int height) {
 	arr          = Arrow(100,100,100,COLOR_ARR);
 	cmp          = Compass(0,0,40,COLOR_ARR,1);
 	pani         = Water(0,0,-1,COLOR_WATER);
-	tar       = Target(sleft,100,5,COLOR_GREEN,1,10);//speed
+	tar          = Target(sleft,100,5,COLOR_GREEN,1,10);//speed
 	ind1         = Indicator(sleft,100,5,COLOR_GREEN,1,10);//checkpoints
 	ind2         = Indicator(sleft,-3,5,COLOR_RED,1,10);//health
 	ind3         = Indicator(0,0,0,COLOR_GOLDEN,1,10);//fuel
@@ -643,22 +771,23 @@ void initGL(GLFWwindow *window, int width, int height) {
 	while(rx<200)
 	{
 		rx+=rand()%40;
-		rz=rand()%20+5;
-		ry=rand()%200;
+		rz=rand()%20+15;
+		ry=rand()%400-200;
 		Ring ring;
 		ring=Ring(rx,ry,rz,COLOR_BLACK);
 		vector_ring.push_back(ring);
-
 	}
 
 	//islands,volcanos,enemybases,boats
-	int yi=10;
+	int yii=10;
+	int yi;
 	Tree tree;
 	for(int j=0;j<10;j++)
 	{
 		int xi=15;
 		for(int i=0;i<10;i++)
 		{
+			yi=yii+rand()%20;
 
 			Island isl;
 			isl=Island(xi,yi,0,COLOR_GREEN);
@@ -708,12 +837,13 @@ void initGL(GLFWwindow *window, int width, int height) {
 				tree=Tree(-xi,yi,0);
 				vector_tree.push_back(tree);
 			}
-			xi+=rand()%20+20;
+			xi+=rand()%50+20;
 		}
 
 		xi=15;
 		for(int i=0;i<10;i++)
 		{
+			yi=yii+rand()%20;
 			Island isl;
 			isl=Island(xi,-yi,0,COLOR_GREEN);
 			vector_i.push_back(isl);
@@ -762,9 +892,9 @@ void initGL(GLFWwindow *window, int width, int height) {
 				tree=Tree(-xi,-yi,0);
 				vector_tree.push_back(tree);
 			}
-			xi+=rand()%20+20;
+			xi+=rand()%50+20;
 		}
-		yi+=rand()%20+20;
+		yii+=rand()%20+50;
 	}
 
 	//enemies
@@ -807,6 +937,45 @@ void initGL(GLFWwindow *window, int width, int height) {
 
 
 int main(int argc, char **argv) {
+
+
+	system("clear");
+	//////////////////////////////////////////////////////////////////////////////////
+	cout << "			             ----------------------------\n";
+	cout << "			            |       STARTUP GUIDE        |\n";
+	cout << "			            |                            |\n";
+	cout << "			            |CONTROLS->>                 |\n";
+	cout << "			            |                            |\n";
+	cout << "			            |VIEW CHANGE::V KEYBOARD KEY |\n";
+	cout << "			            |                            |\n";
+	cout << "			            |LEFT::LEFT ARROW KEY        |\n";
+	cout << "			            |RIGHT::RIGHTT ARROW KEY     |\n";
+	cout << "			            |FORWARD::UP ARROW KEY       |\n";
+	cout << "			            |BACKWARD::DOWN ARROW KEY    |\n";
+	cout << "			            |                            |\n";
+	cout << "			            |BOMB::B KEYBOARD KEY        |\n";
+	cout << "			            |MISSILE::G KEYBOARD KEY     |\n";
+	cout << "			            |RISE::SPACE KEYBOARD KEY    |\n";
+	cout << "			            |                            |\n";
+	cout << "			            |PITCH::W AND S KEYBOARD KEY |\n";
+	cout << "			            |TILT::A AND D KEYBOARD KEY  |\n";
+	cout << "			             ----------------------------\n";
+	cout << "			 ------------------------------------------------------\n";
+	cout << "			|                          GAMEPLAY                    |\n";
+	cout << "			|Clear all the checkpoints to mark the field clear     |\n";
+	cout << "			|Take health and fuel on the way                       |\n";
+	cout << "			|Pass through rings for bonus points                   |\n";
+	cout << "			|Stay away from volcanoes                              |\n";
+	cout << "			|Follow the compass for directions to next checkpoint  |\n";
+	cout << "			 ------------------------------------------------------\n";
+	//////////////////////////////////////////////////////////////////////////////////
+
+	cout << "PRESS BUTTON FOLLOWED BY ENTER KEY TO START\n\n";
+	int junk;
+	cin >> junk;
+	system("clear");
+
+
 	srand(time(0));
 	int width  = 1000;
 	int height = 1000;
@@ -842,6 +1011,29 @@ int main(int argc, char **argv) {
 		enemyspawn.push_back(true);
 	}
 
+	//parachutes
+	int px,py,pz;
+	px=5;
+	py=5;
+	for(int i=0;i<15;i++)
+	{
+		px+=rand()%40+10;
+		py+=rand()%40+10;
+		Para p;
+
+		p=Para(px,py,rand()%10);
+		vector_para.push_back(p);
+
+		p=Para(px,-py,rand()%10);
+		vector_para.push_back(p);
+
+		p=Para(-px,py,rand()%10);
+		vector_para.push_back(p);
+
+		p=Para(-px,-py,rand()%10);
+		vector_para.push_back(p);
+	}
+
 	char title[100];
 	sprintf(title, "score->%d",score);
 	glfwSetWindowTitle(window,title);
@@ -850,16 +1042,27 @@ int main(int argc, char **argv) {
 	while (!glfwWindowShouldClose(window)) {
 		// Process timers
 
-		fuel-=.00001;
+		fuel-=.000005;
 		if(fuel<0)
-			fuel=0;
+		{
+			system("clear");
+			cout << "\nNOT ENOUGH FUEL TO COMPLETE THE GAME\n";
+			quit(window);
+		}
 
 		if(health<0)
-			health=0;
-
-		//cout << enemyno << "\n";
-		if(enemyno==10)
+		{
+			system("clear");
+			cout << "\nPLANE DAMAGED AND TAKEN FOR REPAIR SO ABBORT THE MISSION\n";
 			quit(window);
+		}
+
+		if(enemyno==10)
+		{
+			system("clear");
+			cout << "\nCOURSE CLEARED\nMOVING TO NEXT MISSION...\n";
+			quit(window);
+		}
 
 		if (t60.processTick()) {
 			// 60 fps
@@ -871,7 +1074,7 @@ int main(int argc, char **argv) {
 
 			tick_elements();
 			collide();
-			checkpointcheck();
+			// checkpointcheck();
 			tick_input(window);
 		}
 

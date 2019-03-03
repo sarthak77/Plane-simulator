@@ -60,7 +60,6 @@ Boat::Boat(float x, float y, float z,color_t color) {
 	GLfloat a_vertex_buffer_data[12*9];
     for(int i=0;i<12*9;i++)
     {
-        std::cout << i << "\n";
         int temp;
         if(i%3==0)
             a_vertex_buffer_data[i]=g_vertex_buffer_data[i];

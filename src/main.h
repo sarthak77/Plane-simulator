@@ -77,7 +77,7 @@ bool detect_collision(bounding_box_t a, bounding_box_t b);
 bool colision(glm::vec3 v1,glm::vec3 v2,float distance);
 
 
-extern float screen_zoom, screen_center_x, screen_center_y;
+extern float screen_zoom, screen_center_x, screen_center_y,rho;
 void reset_screen();
 
 // ---- Colors ----
@@ -96,5 +96,8 @@ extern const color_t COLOR_GOLDEN;
 extern const color_t COLOR_FIRE;
 extern const color_t COLOR_VOLCANO;
 extern const color_t COLOR_ARR;
+extern const color_t COLOR_SKIN;
+extern const color_t COLOR_BLUE;
+
 
 #endif

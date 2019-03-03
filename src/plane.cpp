@@ -7,7 +7,7 @@ Plane::Plane(float x, float y, float z) {
     this->position = glm::vec3(x, y, z);
 	this->local_axis = glm::mat4(1.0f);
 	this->rotangle=.5;
-    this->speed = .1;
+    this->speed = .2;
     // Our vertices. Three consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
     // A cube has 6 faces with 2 triangles each, so this makes 6*2=12 triangles, and 12*3 vertices
     
@@ -483,9 +483,9 @@ void Plane::set_position(float x, float y) {
 }
 
 void Plane::tick() {
-    this->position.z -= speed;
-	if(this->position.z<0.5)
-	    this->position.z=0.5;
+    this->position.z -= speed/2;
+	// if(this->position.z<0.5)
+	    // this->position.z=0.5;
 
 }
 
