@@ -1,3 +1,0 @@
-/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/build/CMakeFiles/rebuild_cache.dir
-/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/build/CMakeFiles/graphics_asgn1.dir
-/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/build/CMakeFiles/edit_cache.dir
