@@ -12,9 +12,9 @@ Baloon::Baloon(float x, float y, float z) {
 
 
  int n=40;//n triangles
-	float r=1 ;
+	float r=.5 ;
 	float theta=(2*pi)/n;
-    int height=2;
+    int height=1;
 
 	GLfloat g_vertex_buffer_data[9*n];
 	GLfloat a_vertex_buffer_data[9*n];
@@ -85,8 +85,8 @@ Baloon::Baloon(float x, float y, float z) {
 		prev2[1]=a_vertex_buffer_data[9*i+8];
 	}
 
-    this->object1 = create3DObject(GL_TRIANGLES, n*3, g_vertex_buffer_data, COLOR_FIRE, GL_FILL);
-    this->object2 = create3DObject(GL_TRIANGLES, n*3, a_vertex_buffer_data, COLOR_FIRE, GL_FILL);
+    this->object1 = create3DObject(GL_TRIANGLES, n*3, g_vertex_buffer_data, COLOR_DBLACK, GL_FILL);
+    this->object2 = create3DObject(GL_TRIANGLES, n*3, a_vertex_buffer_data, COLOR_DBLACK, GL_FILL);
 
     
 }

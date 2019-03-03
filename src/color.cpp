@@ -16,3 +16,4 @@ const color_t COLOR_FIRE = {255,69,0};
 const color_t COLOR_VOLCANO = {78,39,40};
 const color_t COLOR_ARR = {255,0,0};
 
+

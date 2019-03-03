@@ -15,6 +15,7 @@
 #include "enemybase.h"
 #include "boat.h"
 #include "volcano.h"
+
 #define GLM_ENABLE_EXPERIMENTAL
 using namespace std;
 
@@ -55,7 +56,6 @@ Timer emt(2);
 Timer cd(1/60);
 float enemyno=0;
 
-
 //baloon
 vector<bool> boon;
 vector<bool> spawn;
@@ -72,23 +72,24 @@ bool mbpress=false;
 int mmaxbal=50;
 Timer mbt(2);
 
-
 int camview=3;
 glm::vec3 tempeye = glm::vec3(50,50,60);//for tower view
 
+//bars
 double speed=100;
 double fuel=100;
 double health=100;
 int score=0;
 
+//screen
 float screen_zoom = 1, screen_center_x = 0, screen_center_y = 0;
 float camera_rotation_angle = 0;
-
 float stop;   
 float sbottom;   
 float sleft;
 float sright;   
 
+//timers
 Timer t60(1.0 / 60);
 Timer t(1);
 
@@ -148,13 +149,7 @@ void draw() {
 		eye.z+=5;
 		up = glm::vec3(0,0,1);
 	}
-
-
-
-
 	Matrices.view = glm::lookAt(eye,target,up);
-
-
 	// Compute ViewProject matrix as view/camera might not be changed for this frame (basic scenario)
 	// Don't change unless you are sure!!
 	glm::mat4 VP = Matrices.projection * Matrices.view;
@@ -178,12 +173,14 @@ void draw() {
 		glm::vec3 y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
 		glm::vec3 z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
 
-		//level
-		xs=7;
-		ys=20;
-		zs=7;
-		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
+		//same y for all bars
+		ys=0;
 		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
+
+		//level
+		xs=1;
+		zs=1;
+		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
 		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
 
 		ind1.l3=enemyno;
@@ -191,11 +188,9 @@ void draw() {
 		ind1.set_position(plane1.position-y+x+z);
 
 		//health
-		xs=-19;
-		ys=20;
-		zs=7;
+		xs=-4;
+		zs=1;
 		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
-		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
 		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
 
 		ind2.l3=health/10;
@@ -203,11 +198,9 @@ void draw() {
 		ind2.set_position(plane1.position-y+x+z);
 
 		//fuel
-		xs=7;
-		ys=20;
-		zs=3;
+		xs=1;
+		zs=0;
 		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
-		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
 		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
 
 		ind3.l3=fuel/10;
@@ -215,11 +208,9 @@ void draw() {
 		ind3.set_position(plane1.position-y+x+z);
 
 		//height
-		xs=-19;
-		ys=20;
-		zs=3;
+		xs=-4;
+		zs=0;
 		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
-		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
 		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
 
 		ind4.l3=plane1.position.z/6;
@@ -228,13 +219,14 @@ void draw() {
 
 		//compass
 		xs=0;
-		ys=30;
-		zs=6;
+		ys=0;
+		zs=2;
 		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
 		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
 		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
 
 		glm::vec3 v1=arr.position-plane1.position;
+		v1.z=0;
 		glm::vec3 v2=glm::vec3(-plane1.local_axis[1][0],-plane1.local_axis[1][1],-plane1.local_axis[1][2]);
 		glm::vec3 v3=v1*v2;
 
@@ -250,8 +242,8 @@ void draw() {
 
 		//target
 		xs=0;
-		ys=20;
-		zs=3;
+		ys=40;
+		zs=0;
 		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
 		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
 		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
@@ -307,18 +299,15 @@ void draw() {
 			vector_mbal[mbalno].draw(VP,vector_mbal[mbalno].position.x,vector_mbal[mbalno].position.y,vector_mbal[mbalno].position.z,glm::vec3(plane1.local_axis[1][0],plane1.local_axis[1][1],plane1.local_axis[1][2]));
 		}
 	}
-
-
 	//enemies throwing rockets
 	//boats and buildings
-
 	for(int i=enemyno*100;i<enemyno*100+100;i++)
 	{
 		if(enemyspawn[i] && emt.processTick())
 		{
 			//setting arrow
 			arr.position=vector_eb[enemyno].position;
-			arr.position.z=plane1.position.z;
+			arr.position.z=plane1.position.z+5;
 
 			vector_enemybal[i].draw(VP,vector_eb[enemyno].position.x,vector_eb[enemyno].position.y,0,plane1.position-vector_eb[enemyno].position);
 			vector_enemybal[i+1].draw(VP,vector_eb[enemyno].position.x+12,vector_eb[enemyno].position.y+12,0,plane1.position-glm::vec3(vector_eb[enemyno].position.x+12,vector_eb[enemyno].position.y+12,0));
@@ -339,22 +328,17 @@ void draw() {
 			vector_enemybal[i+1].velocity/=len;
 
 		}
-		i++;
+		// i++;
 	}
-
-
 }
 
 void tick_input(GLFWwindow *window) {
-
-
 
 	int left  = glfwGetKey(window, GLFW_KEY_LEFT);
 	int up  = glfwGetKey(window, GLFW_KEY_UP);
 	int down  = glfwGetKey(window, GLFW_KEY_DOWN);
 	int right = glfwGetKey(window, GLFW_KEY_RIGHT);
 	int space = glfwGetKey(window, GLFW_KEY_SPACE);
-
 	int w = glfwGetKey(window, GLFW_KEY_W);
 	int s = glfwGetKey(window, GLFW_KEY_S);
 	int d = glfwGetKey(window, GLFW_KEY_D);
@@ -363,7 +347,7 @@ void tick_input(GLFWwindow *window) {
 	int b = glfwGetKey(window, GLFW_KEY_B);
 	int g = glfwGetKey(window, GLFW_KEY_G);
 
-	dashboard(left,right,up,down,w,s,d,a);
+	dashboard(left,right,up,down,w,s,d,a);//to move dashboard acc to plane
 
 	if (left) {
 		plane1.left();
@@ -503,10 +487,10 @@ void dashboard(int left,int right,int up,int down,int w,int s,int d,int a)
 }
 
 void tick_elements() {
+
 	plane1.tick();
 	arr.tick();
 	tar.tick();
-
 	cmp.tick(20);
 	ind1.tick();
 	ind2.tick();
@@ -527,6 +511,7 @@ void tick_elements() {
 	}
 }
 
+//collision detection
 void collide(){
 
 	//volcano
@@ -627,6 +612,7 @@ void collide(){
 	}
 }
 
+//update checkpoint
 void checkpointcheck()
 {
 	if(dead[enemyno])
@@ -665,11 +651,9 @@ void initGL(GLFWwindow *window, int width, int height) {
 
 	}
 
-
-
 	//islands,volcanos,enemybases,boats
 	int yi=10;
-			Tree tree;
+	Tree tree;
 	for(int j=0;j<10;j++)
 	{
 		int xi=15;
@@ -677,11 +661,8 @@ void initGL(GLFWwindow *window, int width, int height) {
 		{
 
 			Island isl;
-
 			isl=Island(xi,yi,0,COLOR_GREEN);
 			vector_i.push_back(isl);
-
-		
 
 			if(rand()%10==1)
 			{
@@ -689,7 +670,6 @@ void initGL(GLFWwindow *window, int width, int height) {
 				vol=Volcano(xi,yi,0);
 				vector_v.push_back(vol);
 			}
-
 			else if(rand()%10==2)
 				ebcor.push_back(make_pair(xi,yi));
 
@@ -702,15 +682,11 @@ void initGL(GLFWwindow *window, int width, int height) {
 			else
 			{
 				tree=Tree(xi,yi,0);
-		vector_tree.push_back(tree);
+				vector_tree.push_back(tree);
 			}
-			
-
 
 			isl=Island(-xi,yi,0,COLOR_GREEN);
 			vector_i.push_back(isl);
-
-			
 
 			if(rand()%10==1)
 			{
@@ -730,19 +706,17 @@ void initGL(GLFWwindow *window, int width, int height) {
 			else
 			{
 				tree=Tree(-xi,yi,0);
-		vector_tree.push_back(tree);
+				vector_tree.push_back(tree);
 			}
-			
-
 			xi+=rand()%20+20;
 		}
+
 		xi=15;
 		for(int i=0;i<10;i++)
 		{
 			Island isl;
 			isl=Island(xi,-yi,0,COLOR_GREEN);
 			vector_i.push_back(isl);
-
 
 			if(rand()%10==1)
 			{
@@ -762,14 +736,12 @@ void initGL(GLFWwindow *window, int width, int height) {
 			else
 			{
 				tree=Tree(xi,-yi,0);
-		vector_tree.push_back(tree);
+				vector_tree.push_back(tree);
 			}
-			
 
 			isl=Island(-xi,-yi,0,COLOR_GREEN);
 			vector_i.push_back(isl);
 
-			
 			if(rand()%10==1)
 			{
 				Volcano vol;
@@ -788,15 +760,14 @@ void initGL(GLFWwindow *window, int width, int height) {
 			else
 			{
 				tree=Tree(-xi,-yi,0);
-		vector_tree.push_back(tree);
+				vector_tree.push_back(tree);
 			}
-			
-
 			xi+=rand()%20+20;
 		}
 		yi+=rand()%20+20;
 	}
 
+	//enemies
 	for(int i=0;i<ebcor.size();i++)
 	{
 		Enemybase eb;
@@ -805,6 +776,7 @@ void initGL(GLFWwindow *window, int width, int height) {
 		dead.push_back(false);
 	}
 
+	//boats
 	for(int i=0;i<ebcor.size();i++)
 	{
 		Boat boat;
@@ -838,13 +810,8 @@ int main(int argc, char **argv) {
 	srand(time(0));
 	int width  = 1000;
 	int height = 1000;
-
-
 	window = initGLFW(width, height);
-
 	initGL (window, width, height);
-
-
 
 	//50 baloons
 	for(int i=0;i<maxbal;i++)
@@ -879,7 +846,6 @@ int main(int argc, char **argv) {
 	sprintf(title, "score->%d",score);
 	glfwSetWindowTitle(window,title);
 
-
 	/* Draw in loop */
 	while (!glfwWindowShouldClose(window)) {
 		// Process timers
@@ -891,7 +857,7 @@ int main(int argc, char **argv) {
 		if(health<0)
 			health=0;
 
-		cout << enemyno << "\n";
+		//cout << enemyno << "\n";
 		if(enemyno==10)
 			quit(window);
 

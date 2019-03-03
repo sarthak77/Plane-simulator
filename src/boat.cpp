@@ -74,10 +74,10 @@ Boat::Boat(float x, float y, float z,color_t color) {
         
     }
 	
-    this->object1 = create3DObject(GL_TRIANGLES, 2*3, a_vertex_buffer_data, COLOR_RED, GL_FILL);
-    this->object2 = create3DObject(GL_TRIANGLES, 4*3, a_vertex_buffer_data+2*9, COLOR_BROWN, GL_FILL);
-    this->object3 = create3DObject(GL_TRIANGLES, 4*3, a_vertex_buffer_data+6*9, COLOR_GREEN, GL_FILL);
-    this->object4 = create3DObject(GL_TRIANGLES, 2*3, a_vertex_buffer_data+10*9, COLOR_GOLDEN, GL_FILL);
+    this->object1 = create3DObject(GL_TRIANGLES, 2*3, a_vertex_buffer_data, COLOR_BLACK, GL_FILL);
+    this->object2 = create3DObject(GL_TRIANGLES, 4*3, a_vertex_buffer_data+2*9, COLOR_DBLACK, GL_FILL);
+    this->object3 = create3DObject(GL_TRIANGLES, 4*3, a_vertex_buffer_data+6*9, COLOR_DBLACK, GL_FILL);
+    this->object4 = create3DObject(GL_TRIANGLES, 2*3, a_vertex_buffer_data+10*9, COLOR_DBLACK, GL_FILL);
 }
 
 void Boat::draw(glm::mat4 VP) {

@@ -52,14 +52,16 @@ Indicator::Indicator(float x, float y, float z,color_t color,int flag,double l3)
 
 void Indicator::draw(glm::mat4 VP) {
 
+    float d=.25;
     Matrices.model = glm::mat4(1.0f);
+    glm::mat4 scale=glm::scale(glm::vec3(d,d,d));
     glm::mat4 translate = glm::translate (this->position);    // glTranslatef
     //glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), glm::vec3(1, 0, 0));
     //glm::mat4 rotate2    = glm::rotate((float) (90 * M_PI / 180.0f), glm::vec3(1, 0, 0));
     
 	// No need as coords centered at 0, 0, 0 of cube arouund which we waant to rotate
     // rotate          = rotate * glm::translate(glm::vec3(0, -0.6, 0));
-    Matrices.model *= (translate * this->local_axis);
+    Matrices.model *= (translate * this->local_axis*scale);
     glm::mat4 MVP = VP * Matrices.model;
     glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
 

@@ -1,0 +1,292 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/arrow.cpp
+arrow.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/arrow.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/arrow.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/baloon.cpp
+baloon.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/baloon.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/baloon.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/boat.cpp
+boat.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/boat.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/boat.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/color.cpp
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/compass.cpp
+compass.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/compass.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/compass.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/enemybase.cpp
+enemybase.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/enemybase.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/enemybase.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/indicator.cpp
+indicator.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/indicator.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/indicator.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/input.cpp
+iostream
+-
+cmath
+-
+fstream
+-
+vector
+-
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+glm/gtx/transform.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/island.cpp
+island.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/island.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/island.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.cpp
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+timer.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/timer.h
+plane.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/plane.h
+indicator.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/indicator.h
+powerup.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/powerup.h
+arrow.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/arrow.h
+tree.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/tree.h
+target.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/target.h
+island.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/island.h
+water.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/water.h
+ring.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/ring.h
+compass.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/compass.h
+baloon.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/baloon.h
+mbaloon.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/mbaloon.h
+enemybase.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/enemybase.h
+boat.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/boat.h
+volcano.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/volcano.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+iostream
+-
+cmath
+-
+fstream
+-
+vector
+-
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+glm/gtx/transform.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/mbaloon.cpp
+mbaloon.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/mbaloon.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/mbaloon.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/nonedit.cpp
+iostream
+-
+cmath
+-
+fstream
+-
+vector
+-
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+glm/gtx/transform.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/other_handlers.cpp
+iostream
+-
+cmath
+-
+fstream
+-
+vector
+-
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+glm/gtx/transform.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/plane.cpp
+plane.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/plane.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/plane.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/powerup.cpp
+powerup.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/powerup.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/powerup.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/ring.cpp
+ring.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/ring.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/ring.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/target.cpp
+target.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/target.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/target.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/timer.cpp
+timer.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/timer.h
+GLFW/glfw3.h
+-
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/timer.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/tree.cpp
+tree.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/tree.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/tree.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/volcano.cpp
+volcano.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/volcano.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/volcano.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/water.cpp
+water.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/water.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/water.h
+main.h
+/home/sarthak/iiit/sem 4/graphics/ass/ass2/inclass2/src/main.h
+
