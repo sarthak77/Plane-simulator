@@ -26,6 +26,7 @@ GLFWwindow *window;
 Plane plane1;
 Water pani;
 Arrow arr;
+void dashboard(int,int,int,int,int,int,int,int);
 
 Indicator ind1,ind2,ind3,ind4;
 vector<Island> vector_i;
@@ -161,17 +162,56 @@ void draw() {
 
 	if(camview==3)
 	{
+		int xs=1;
+		int ys=1;
+		int zs=1;
+		glm::vec3 x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
+		glm::vec3 y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
+		glm::vec3 z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
+
 		//speed   
-		ind1.draw(VP,glm::vec3(plane1.position.x,plane1.position.y,plane1.position.z));
+		xs=7;
+		ys=20;
+		zs=7;
+		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
+		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
+		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
+
+		ind1.draw(VP);
+		ind1.set_position(plane1.position-y+x+z);
 		
 		//health
-		ind2.draw(VP,glm::vec3(stop,sright,plane1.position.z));
+		xs=-19;
+		ys=20;
+		zs=7;
+		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
+		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
+		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
+
+		ind2.draw(VP);
+		ind2.set_position(plane1.position-y+x+z);
 		
 		//fuel
-		//ind3.draw(VP);
+		xs=7;
+		ys=20;
+		zs=3;
+		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
+		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
+		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
+
+		ind3.draw(VP);
+		ind3.set_position(plane1.position-y+x+z);
 		
 		//height
-		//ind4.draw(VP);
+		xs=-19;
+		ys=20;
+		zs=3;
+		x=glm::vec3(xs*plane1.local_axis[0][0],xs*plane1.local_axis[0][1],xs*plane1.local_axis[0][2]);
+		y=glm::vec3(ys*plane1.local_axis[1][0],ys*plane1.local_axis[1][1],ys*plane1.local_axis[1][2]);
+		z=glm::vec3(zs*plane1.local_axis[2][0],zs*plane1.local_axis[2][1],zs*plane1.local_axis[2][2]);
+
+		ind4.draw(VP);
+		ind4.set_position(plane1.position-y+x+z);
 	}
 
 	for(int i=0;i<vector_i.size();i++)
@@ -267,7 +307,8 @@ void tick_input(GLFWwindow *window) {
 	int b = glfwGetKey(window, GLFW_KEY_B);
 	int g = glfwGetKey(window, GLFW_KEY_G);
 
-
+	dashboard(left,right,up,down,w,s,d,a);
+	
 	if (left) {
 		plane1.left();
 	}
@@ -330,15 +371,73 @@ void tick_input(GLFWwindow *window) {
 	}
 }
 
+void dashboard(int left,int right,int up,int down,int w,int s,int d,int a)
+{
+	if (left) {
+		ind1.left();
+		ind2.left();
+		ind3.left();
+		ind4.left();
+	}
+	if(right)
+	{
+		ind1.right();
+		ind2.right();
+		ind3.right();
+		ind4.right();
+	}
+	if(up)
+	{
+		ind1.forward();
+		ind2.forward();
+		ind3.forward();
+		ind4.forward();
+	}
+	if(down)
+	{
+		ind1.backward();
+		ind2.backward();
+		ind3.backward();
+		ind4.backward();
+	}
+	if(w)
+	{
+		ind1.pitchup();
+		ind2.pitchup();
+		ind3.pitchup();
+		ind4.pitchup();
+	}
+	if(s)
+	{
+		ind1.pitchdown();
+		ind2.pitchdown();
+		ind3.pitchdown();
+		ind4.pitchdown();
+	}
+	if(d)
+	{
+		ind1.tiltright();
+		ind2.tiltright();
+		ind3.tiltright();
+		ind4.tiltright();
+	}
+	if(a)
+	{
+		ind1.tiltleft();
+		ind2.tiltleft();
+		ind3.tiltleft();
+		ind4.tiltleft();
+	}
+}
+
 void tick_elements() {
 	plane1.tick();
 	arr.tick();
 
-	ind1.tick(5);
-	ind2.tick(5);
-	ind3.tick(5);
-	ind4.tick(5);
-	//camera_rotation_angle += 1;
+	ind1.tick();
+	ind2.tick();
+	ind3.tick();
+	ind4.tick();
 
 	//water ballons
 	if(bpress && boon[balno] && !spawn[balno])
@@ -436,9 +535,9 @@ void initGL(GLFWwindow *window, int width, int height) {
 	arr          = Arrow(0,0,40,COLOR_ARR);
 	pani         = Water(0,0,-1,COLOR_WATER);
 	ind1         = Indicator(sleft,100,5,COLOR_GREEN,1);//speed
-	ind2         = Indicator(sleft,-3,5,COLOR_RED,1);//health
-	ind3         = Indicator(sleft,100,0,COLOR_GOLDEN,1);//fuel
-	ind4         = Indicator(sleft,100,0,COLOR_GREEN,1);//height
+	ind2         = Indicator(sleft,-3,5,COLOR_WHITE,1);//health
+	ind3         = Indicator(0,0,0,COLOR_GOLDEN,1);//fuel
+	ind4         = Indicator(sleft,100,0,COLOR_VOLCANO,1);//height
 
 	int rx=-300;
 	int ry=30;
@@ -636,7 +735,7 @@ int main(int argc, char **argv) {
 		//cout << fuel << "\n";
 		//cout << health << "\n";
 		//cout << camview << "\n";
-		cout << glm::length(plane1.position-arr.position) << "\n";  
+		//cout << glm::length(plane1.position-arr.position) << "\n";  
 
 		//cout << vector_eb[enemyno].position.x << " " << vector_eb[enemyno].position.y << " " << vector_eb[enemyno].position.z << "\n";
 		//cout << plane1.position.x << " " << plane1.position.y << " " << plane1.position.z << "\n";
