@@ -35,6 +35,11 @@ private:
     VAO *object4;
     VAO *object5;
     VAO *object6;
+    VAO *object7;
+    VAO *object8;
+    VAO *object9;
+    VAO *object10;
+    VAO *object11;
 };
 
 #endif // PLANE_H

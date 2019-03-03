@@ -1,13 +1,13 @@
 #include "main.h"
 
-#ifndef INDICATOR_H
-#define INDICATOR_H
+#ifndef TARGET_H
+#define TARGET_H
 
 
-class Indicator {
+class Target {
 public:
-    Indicator() {}
-    Indicator(float x, float y, float z,color_t color,int flag,double l3);
+    Target() {}
+    Target(float x, float y, float z,color_t color,int flag,double l3);
     glm::vec3 position;
     glm::mat4 local_axis;
 
@@ -32,7 +32,7 @@ public:
     glm::vec3 axis(int axe);
     
 private:
-    VAO *object;
+    VAO *object1;
     VAO *object2;
     VAO *object3;
     VAO *object4;
@@ -40,4 +40,4 @@ private:
     VAO *object6;
 };
 
-#endif // INDICATOR_H
+#endif // TARGET_H

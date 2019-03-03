@@ -9,6 +9,9 @@ Mbaloon::Mbaloon(float x, float y, float z) {
     this->velocity = glm::vec3(0,0,0);//-10
     this->acc = glm::vec3(0,0,-10);//0,0,-10
     this->rotation = 0;
+	this->local_axis = glm::mat4(1.0f);
+	this->speed=1;
+	this->direction=glm::vec3(1,0,0);
 
 
  int n=40;//n triangles
@@ -132,19 +135,20 @@ Mbaloon::Mbaloon(float x, float y, float z) {
     
 }
 
-void Mbaloon::draw(glm::mat4 VP,float x,float y,float z) {
+void Mbaloon::draw(glm::mat4 VP,float x,float y,float z,glm::vec3 dir) {
     
     this->position.x=x;
     this->position.y=y;
     this->position.z=z;
+	this->direction=dir;
 
     
     Matrices.model = glm::mat4(1.0f);
     glm::mat4 translate = glm::translate (this->position);    // glTranslatef
-    glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), glm::vec3(1, 0, 0));
+    //glm::mat4 rotate    = glm::rotate((float) (this->rotation * M_PI / 180.0f), glm::vec3(1, 0, 0));
     // No need as coords centered at 0, 0, 0 of cube arouund which we waant to rotate
     // rotate          = rotate * glm::translate(glm::vec3(0, -0.6, 0));
-    Matrices.model *= (translate * rotate);
+    Matrices.model *= (translate * this->local_axis);
     glm::mat4 MVP = VP * Matrices.model;
     glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
     draw3DObject(this->object1);
@@ -158,9 +162,17 @@ void Mbaloon::set_position(float x, float y,float z) {
 
 //x is forward coming out of screen
 void Mbaloon::tick(int up) {
-    //this->rotation += speed;
-    this->position=this->position+this->velocity*(glm::vec3(.01,.01,.01));
-    this->velocity=this->velocity+this->acc*(glm::vec3(.01,.01,.01));
+    //this->position=this->position+this->velocity*(glm::vec3(.01,.01,.01));
+    //this->velocity=this->velocity+this->acc*(glm::vec3(.01,.01,.01));
+
+	//float mag = glm::length(glm::vec3(this->local_axis[1][0],this->local_axis[1][1],this->local_axis[1][2]));
+    //glm::vec3 length = glm::vec3(this->local_axis[1][0]*this->speed/mag,this->local_axis[1][1]*this->speed/mag,this->local_axis[1][2]*this->speed/mag);
+    //this->position -= length;
+
+	float mag = glm::length(this->direction);
+	mag*=up;
+    glm::vec3 length = glm::vec3(this->direction.x*this->speed/mag,this->direction.y*this->speed/mag,this->direction.z*this->speed/mag);
+    this->position += length;
     
 }
 

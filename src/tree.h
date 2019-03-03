@@ -1,25 +1,24 @@
 #include "main.h"
 
-#ifndef POWERUP_H
-#define POWERUP_H
+#ifndef TREE_H
+#define TREE_H
 
 
-class Powerup {
+class Tree {
 public:
-    Powerup() {}
-    Powerup(float x, float y, float z,int flag);
+    Tree() {}
+    Tree(float x, float y, float z);
     glm::vec3 position;
     float rotation;
-    int flag;
     void draw(glm::mat4 VP);
     void set_position(float x, float y);
     void tick();
     double speed;
 private:
-    VAO *object;
     VAO *object1;
     VAO *object2;
     VAO *object3;
+    VAO *object4;
 };
 
-#endif // POWERUP_H
+#endif // TREE_H

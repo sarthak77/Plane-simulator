@@ -11,92 +11,82 @@ Ring::Ring(float x, float y, float z,color_t color) {
     speeddown = 0.025;
     
 
-    int n=100;//n triangles
-	float r=.5 ;
+    int n=40;//n triangles
+	float r=5 ;
 	float theta=(2*pi)/n;
+    int height=1;
 
 	GLfloat g_vertex_buffer_data[9*n];
-
+	GLfloat a_vertex_buffer_data[9*n];
+	
 	//1st triangle
-	g_vertex_buffer_data[0]=0;
-	g_vertex_buffer_data[1]=0;
+	g_vertex_buffer_data[0]=r;
 	g_vertex_buffer_data[2]=0;
+	g_vertex_buffer_data[1]=height;
 	
 	g_vertex_buffer_data[3]=r;
 	g_vertex_buffer_data[4]=0;
 	g_vertex_buffer_data[5]=0;
 	
 	g_vertex_buffer_data[6]=r*cos(theta);
-	g_vertex_buffer_data[7]=r*sin(theta);
-	g_vertex_buffer_data[8]=0;
+	g_vertex_buffer_data[8]=r*sin(theta);
+	g_vertex_buffer_data[7]=0;
+/////////////////////////////////////////////////
+    a_vertex_buffer_data[0]=r*cos(theta);
+	a_vertex_buffer_data[2]=r*sin(theta);
+	a_vertex_buffer_data[1]=0;
+	
+	a_vertex_buffer_data[3]=r;
+	a_vertex_buffer_data[5]=0;
+	a_vertex_buffer_data[4]=height;
+	
+	a_vertex_buffer_data[6]=r*cos(theta);
+	a_vertex_buffer_data[8]=r*sin(theta);
+	a_vertex_buffer_data[7]=height;
 
 	float prev[2];
 	prev[0]=g_vertex_buffer_data[6];
-	prev[1]=g_vertex_buffer_data[7];
+	prev[1]=g_vertex_buffer_data[8];
 
-    int i;
-	for(i=1;i<n;i++)
+    float prev2[2];
+	prev2[0]=a_vertex_buffer_data[6];
+	prev2[1]=a_vertex_buffer_data[8];
+
+	for(int i=1;i<n;i++)
 	{
-		g_vertex_buffer_data[9*i]=0;
-		g_vertex_buffer_data[9*i+1]=0;
-		g_vertex_buffer_data[9*i+2]=0;
+		g_vertex_buffer_data[9*i]=prev2[0];
+		g_vertex_buffer_data[9*i+2]=prev2[1];
+		g_vertex_buffer_data[9*i+1]=height;
 		
 		g_vertex_buffer_data[9*i+3]=prev[0];
-		g_vertex_buffer_data[9*i+4]=prev[1];
-		g_vertex_buffer_data[9*i+5]=0;
+		g_vertex_buffer_data[9*i+5]=prev[1];
+		g_vertex_buffer_data[9*i+4]=0;
 		
 		g_vertex_buffer_data[9*i+6]=prev[0]*cos(theta)-prev[1]*sin(theta);
-		g_vertex_buffer_data[9*i+7]=prev[0]*sin(theta)+prev[1]*cos(theta);
-		g_vertex_buffer_data[9*i+8]=0;
+		g_vertex_buffer_data[9*i+8]=prev[0]*sin(theta)+prev[1]*cos(theta);
+		g_vertex_buffer_data[9*i+7]=0;
 
 		prev[0]=g_vertex_buffer_data[9*i+6];
-		prev[1]=g_vertex_buffer_data[9*i+7];
-        
-	}
-    this->object1 = create3DObject(GL_TRIANGLES, n*3, g_vertex_buffer_data, color, GL_FILL);
-
-	
-	GLfloat vertex_buffer_data[9*n];
-
-    r=0.4;
-    //1st triangle
-	vertex_buffer_data[0]=0;
-	vertex_buffer_data[1]=0;
-	vertex_buffer_data[2]=0;
-	
-	vertex_buffer_data[3]=r;
-	vertex_buffer_data[4]=0;
-	vertex_buffer_data[5]=0;
-	
-	vertex_buffer_data[6]=r*cos(theta);
-	vertex_buffer_data[7]=r*sin(theta);
-	vertex_buffer_data[8]=0;
-
-	
-	prev[0]=vertex_buffer_data[6];
-	prev[1]=vertex_buffer_data[7];
-
-    i;
-	for(i=1;i<n;i++)
-	{
-		vertex_buffer_data[9*i]=0;
-		vertex_buffer_data[9*i+1]=0;
-		vertex_buffer_data[9*i+2]=0;
+		prev[1]=g_vertex_buffer_data[9*i+8];
+///////////////////////////////////////////////////////
+        a_vertex_buffer_data[9*i]=g_vertex_buffer_data[9*i+6];
+		a_vertex_buffer_data[9*i+2]=g_vertex_buffer_data[9*i+8];
+		a_vertex_buffer_data[9*i+1]=0;
 		
-		vertex_buffer_data[9*i+3]=prev[0];
-		vertex_buffer_data[9*i+4]=prev[1];
-		vertex_buffer_data[9*i+5]=0;
+		a_vertex_buffer_data[9*i+3]=prev2[0];
+		a_vertex_buffer_data[9*i+5]=prev2[1];
+		a_vertex_buffer_data[9*i+4]=height;
 		
-		vertex_buffer_data[9*i+6]=prev[0]*cos(theta)-prev[1]*sin(theta);
-		vertex_buffer_data[9*i+7]=prev[0]*sin(theta)+prev[1]*cos(theta);
-		vertex_buffer_data[9*i+8]=0;
+		a_vertex_buffer_data[9*i+6]=prev2[0]*cos(theta)-prev2[1]*sin(theta);
+		a_vertex_buffer_data[9*i+8]=prev2[0]*sin(theta)+prev2[1]*cos(theta);
+		a_vertex_buffer_data[9*i+7]=height;
 
-		prev[0]=vertex_buffer_data[9*i+6];
-		prev[1]=vertex_buffer_data[9*i+7];
-        
+		prev2[0]=a_vertex_buffer_data[9*i+6];
+		prev2[1]=a_vertex_buffer_data[9*i+8];
 	}
-    this->object2 = create3DObject(GL_TRIANGLES, n*3, vertex_buffer_data, COLOR_BLACK, GL_FILL);
 
+    this->object1 = create3DObject(GL_TRIANGLES, n*3, g_vertex_buffer_data, COLOR_DBLACK, GL_FILL);
+    this->object2 = create3DObject(GL_TRIANGLES, n*3, a_vertex_buffer_data, COLOR_DBLACK, GL_FILL);
 
 
 }

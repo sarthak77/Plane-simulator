@@ -20,6 +20,8 @@ private:
     VAO *object3;
     VAO *object4;
     VAO *object5;
+    VAO *object6;
+    VAO *object7;
 };
 
 #endif // ENEMYBASE_H

@@ -54,6 +54,10 @@ Island::Island(float x, float y, float z,color_t color) {
     this->object1 = create3DObject(GL_TRIANGLES, n*3, g_vertex_buffer_data, color, GL_FILL);
 
 
+
+
+
+
 }
 
 void Island::draw(glm::mat4 VP) {

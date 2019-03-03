@@ -17,6 +17,7 @@ public:
 private:
     VAO *object1;
     VAO *object2;
+    VAO *object3;
 };
 
 #endif // VOLCANO_H

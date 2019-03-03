@@ -1,22 +1,22 @@
 #include "main.h"
 
-#ifndef INDICATOR_H
-#define INDICATOR_H
+#ifndef COMPASS_H
+#define COMPASS_H
 
 
-class Indicator {
+class Compass {
 public:
-    Indicator() {}
-    Indicator(float x, float y, float z,color_t color,int flag,double l3);
+    Compass() {}
+    Compass(float x, float y, float z,color_t color,int flag);
     glm::vec3 position;
     glm::mat4 local_axis;
 
+    float angle;
     float rotation;
-    double l3;
     float rotangle;
     void draw(glm::mat4 VP);
     void set_position(glm::vec3 a);
-    void tick();
+    void tick(float angle);
     double speed;
     int flag;
     color_t color;
@@ -27,12 +27,12 @@ public:
     void backward();
     void pitchup();
     void pitchdown();
-    void tiltright();
-    void tiltleft();
+    void tiltright(float angle);
+    void tiltleft(float angle);
     glm::vec3 axis(int axe);
     
 private:
-    VAO *object;
+    VAO *object1;
     VAO *object2;
     VAO *object3;
     VAO *object4;
@@ -40,4 +40,4 @@ private:
     VAO *object6;
 };
 
-#endif // INDICATOR_H
+#endif // COMPASS_H

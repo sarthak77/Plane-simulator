@@ -16,6 +16,7 @@ public:
     double speed;
 private:
     VAO *object1;
+    VAO *object;
     VAO *object2;
 };
 
