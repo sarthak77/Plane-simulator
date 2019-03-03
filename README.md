@@ -1,8 +1,12 @@
-## Compiling
+### Building
+extract the files and run:
+mkdir build && cd build
+
+### Compiling
 go to build directory and run:
 cmake.. && make all
 
-## Executing
+### Executing
 run the command:
 ./graphics_asgn1
 
